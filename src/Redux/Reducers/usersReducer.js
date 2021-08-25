@@ -14,7 +14,7 @@ const Users = (state = initialState, action) => {
     case SIGNUP_USER:
       return {
         ...state,
-        users: {...action.payload},
+        users:action.payload,
       };
     case SET_LOGIN_USER:
       return {

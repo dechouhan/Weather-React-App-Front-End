@@ -1,28 +1,29 @@
 import React from "react";
 import { Form, Button, Container } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { locationCordinatesAction } from "../Redux/Actions/weatherAction";
 import { loginUser } from "../Thunk/userThunk";
 
 export default function Signup() {
-    const dispatch = useDispatch();
-    const history = useHistory()
-    const token = useSelector((state) => state.Users.token);
+  const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
     if (e.target.email.value && e.target.password.value) {
+      dispatch(
+        loginUser({
+          email: e.target.email.value,
+          password: e.target.password.value,
+        })
+      );
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
         dispatch(
-          loginUser({
-            email: e.target.email.value,
-            password: e.target.password.value,
-          })
+          locationCordinatesAction({ latitude: latitude, longitude: longitude })
         );
-        if (token) {
-          history.push("/");
-        }
-      } else {
-        alert("invlid input");
-      }
+      });
+    } else {
+      alert("invlid input");
+    }
   };
   return (
     <div>
