@@ -8,9 +8,11 @@ const PublicRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        token ? <Redirect to="/dashboard" /> 
-        : 
-        <Component {...rest} {...props} />
+        token ? (
+          <Redirect to="/dashboard" />
+        ) : (
+          <Component {...rest} {...props} />
+        )
       }
     />
   );

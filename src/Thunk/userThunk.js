@@ -15,9 +15,8 @@ export const loginUser = (data) => async (dispatch) => {
   try {
     const res = await UserService.login(data);
     dispatch(setLoginUser(res.data));
-  return Promise.resolve(res.data);
+    return Promise.resolve(res.data);
+  } catch (err) {
+    return Promise.reject(err);
   }
- catch (err) {
-  return Promise.reject(err);
-}
 };

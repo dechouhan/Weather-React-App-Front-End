@@ -6,22 +6,24 @@ import { signupUser } from "../Thunk/userThunk";
 
 export default function Signup() {
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const submitHandler = (e) => {
     e.preventDefault();
     if (
       e.target.names.value &&
       e.target.password.value &&
-      e.target.email.value
+      e.target.email.value &&
+      e.target.city.value
     ) {
       dispatch(
         signupUser({
           name: e.target.names.value,
           password: e.target.password.value,
           email: e.target.email.value,
+          city: e.target.city.value,
         })
       );
-      history.push("/login")
+      history.push("/login");
     }
   };
   return (
@@ -48,6 +50,10 @@ export default function Signup() {
               placeholder="Password"
               name="password"
             />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>City</Form.Label>
+            <Form.Control type="text" placeholder="Enter City" name="city" />
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit

@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { locationCordinatesAction } from "../Redux/Actions/weatherAction";
 import { loginUser } from "../Thunk/userThunk";
 
 export default function Signup() {
@@ -15,12 +14,6 @@ export default function Signup() {
           password: e.target.password.value,
         })
       );
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        dispatch(
-          locationCordinatesAction({ latitude: latitude, longitude: longitude })
-        );
-      });
     } else {
       alert("invlid input");
     }

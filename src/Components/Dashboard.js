@@ -1,36 +1,45 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCityWeatherAction } from "../Redux/Actions/weatherAction";
-import { showWeatherByCordinate } from "../Thunk/weatherThunk";
+import { locationCordinatesAction } from "../Redux/Actions/weatherAction";
+import {
+  showWeatherByCity,
+  showWeatherByCordinate,
+} from "../Thunk/weatherThunk";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const searchCityWeather = useSelector((state) => state.Weather.cityWeather);
   const loggedUserEmail = useSelector((state) => state.Users.email);
   const isCordinates = useSelector((state) => state.Weather.locationCordinates);
+  const loggedUserCity = useSelector((state) => state.Users.city);
   useEffect(() => {
-    dispatch(showWeatherByCordinate(isCordinates, loggedUserEmail));
-  }, [dispatch, loggedUserEmail, isCordinates]);
+    if (!isCordinates) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        dispatch(
+          locationCordinatesAction({ latitude: latitude, longitude: longitude })
+        );
+      });
+    }
 
-  const showWeather = (e) => async (dispatch) => {
+    if (isCordinates) {
+      dispatch(showWeatherByCordinate(isCordinates, loggedUserEmail));
+    } else {
+      dispatch(showWeatherByCity(loggedUserCity));
+    }
+  }, [dispatch, loggedUserEmail, isCordinates, loggedUserCity]);
+
+  const showWeather = (e) => {
     e.preventDefault();
     const cityname = e.target.city.value;
-    try {
-        const res = await axios.get(
-          `http://localhost:7000/showweather?cityName=${cityname}&loggedUserEmail=${loggedUserEmail}`
-        );
-        dispatch(fetchCityWeatherAction(res.data));
-    } catch (err) {
-      alert(err);
-    }
+    dispatch(showWeatherByCity(cityname, loggedUserEmail));
   };
 
   return (
     <div>
       <h1>Dashboard Page</h1>
       <h4>Check Weather</h4>
-      <form onSubmit={(e) => dispatch(showWeather(e))}>
+      <form onSubmit={showWeather}>
         <input type="text" name="city" />
         <br />
         <br />

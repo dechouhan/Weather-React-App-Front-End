@@ -8,29 +8,57 @@ import Dashboard from "./Components/Dashboard";
 import PrivateRoute from "./Components/Routes/privateRoute";
 import PublicRoute from "./Components/Routes/publicRoute";
 import Logout from "./Components/Logout";
+import CitySearchHistory from "./Components/CitySearchHistory";
+import { useSelector } from "react-redux";
 
 function App() {
+  const token = useSelector((state) => state.Users.token);
   return (
     <div className="App">
       <BrowserRouter>
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="/">Weather App</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Dashboard</Nav.Link>
-            <Nav.Link as={Link} to="/login">Login</Nav.Link>
-            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
-            <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
-      
+        <Navbar bg="dark" variant="dark">
+          <Container>
+            <Navbar.Brand as={Link} to="/">
+              Weather App
+            </Navbar.Brand>
+            <Nav className="me-auto">
+              {token ? (
+                <>
+                  <Nav.Link as={Link} to="/">
+                    Dashboard
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/citysearchhistory">
+                    History
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/logout">
+                    Logout
+                  </Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link as={Link} to="/login">
+                    Login
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/signup">
+                    Signup
+                  </Nav.Link>
+                </>
+              )}
+            </Nav>
+          </Container>
+        </Navbar>
+
         <Switch>
-            <PrivateRoute component={Logout} exact path="/logout" />
-            <PrivateRoute component={Dashboard} exact path="/dashboard" />
-            <PrivateRoute component={Dashboard} exact path="/" />
-            <PublicRoute component={Signup} exact path="/signup" />
-            <PublicRoute component={Login} exact path="/login" />
+          <PrivateRoute component={Logout} exact path="/logout" />
+          <PrivateRoute component={Dashboard} exact path="/dashboard" />
+          <PrivateRoute component={Dashboard} exact path="/" />
+          <PrivateRoute
+            component={CitySearchHistory}
+            exact
+            path="/citysearchhistory"
+          />
+          <PublicRoute component={Signup} exact path="/signup" />
+          <PublicRoute component={Login} exact path="/login" />
         </Switch>
       </BrowserRouter>
     </div>
