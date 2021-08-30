@@ -13,6 +13,7 @@ export default function Logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     localStorage.removeItem("username");
+    localStorage.removeItem("city");
     dispatch(resetCordinatesAction())
     dispatch(resetCityAction())
     alert("You are SuccessFully LogOut");

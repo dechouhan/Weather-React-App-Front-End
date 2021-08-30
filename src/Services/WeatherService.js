@@ -1,18 +1,18 @@
 import http from "./http-common";
 
 class WeatherService {
-  get(data, email) {
+  get(data, token) {
     return http.get(
-      `/showweatherbycordinate?latitude=${data.latitude}&longitude=${data.longitude}&loggedUserEmail=${email}`
+      `/showweatherbycordinate?latitude=${data.latitude}&longitude=${data.longitude}&token=${token}`
     );
   }
 
-  getWeatherByCity(cityname, email) {
-    return http.get(`/showweathers?cityName=${cityname}&email=${email}`);
+  getWeatherByCity(cityname, token) {
+    return http.get(`/showweathers?cityName=${cityname}&token=${token}`);
   }
 
-  getCitySearchHistory(email) {
-    return http.get(`/showcitysearchhistory?email=${email}`);
+  getCitySearchHistory(token) {
+    return http.get(`/showcitysearchhistory?token=${token}`);
   }
 }
 

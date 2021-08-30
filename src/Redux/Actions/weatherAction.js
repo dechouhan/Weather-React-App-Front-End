@@ -3,6 +3,7 @@ import {
   FETCH_LOCATION_CORDINATES,
   RESET_CITY,
   RESET_LOCATION_CORDINATES,
+  SET_CHECK_ACTION,
   SHOW_CITY_HISTORY,
 } from ".";
 
@@ -25,5 +26,10 @@ export const resetCityAction = () => ({
 
 export const showCitySearchHistoryAction = (data) => ({
   type: SHOW_CITY_HISTORY,
+  payload: data,
+});
+
+export const showCheckAction = (data) => ({
+  type: SET_CHECK_ACTION,
   payload: data,
 });

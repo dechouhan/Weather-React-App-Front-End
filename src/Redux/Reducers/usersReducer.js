@@ -1,4 +1,9 @@
-import { RESET_LOGIN_USER, SET_LOGIN_USER, SIGNUP_USER } from "../Actions";
+import {
+  RESET_LOGIN_USER,
+  SET_LOGIN_USER,
+  SHOW_LOG,
+  SIGNUP_USER,
+} from "../Actions";
 
 const initialState = {
   users: [],
@@ -7,6 +12,7 @@ const initialState = {
   username: localStorage.getItem("name"),
   email: localStorage.getItem("email"),
   city: localStorage.getItem("city"),
+  loglist: [],
 };
 
 const Users = (state = initialState, action) => {
@@ -31,6 +37,13 @@ const Users = (state = initialState, action) => {
         token: null,
         _id: null,
         username: null,
+        email: null,
+        city: null,
+      };
+    case SHOW_LOG:
+      return {
+        ...state,
+        loglist: action.payload,
       };
     default:
       return state;

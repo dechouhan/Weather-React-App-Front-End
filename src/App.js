@@ -10,6 +10,7 @@ import PublicRoute from "./Components/Routes/publicRoute";
 import Logout from "./Components/Logout";
 import CitySearchHistory from "./Components/CitySearchHistory";
 import { useSelector } from "react-redux";
+import LogUser from "./Components/LogUser";
 
 function App() {
   const token = useSelector((state) => state.Users.token);
@@ -29,6 +30,9 @@ function App() {
                   </Nav.Link>
                   <Nav.Link as={Link} to="/citysearchhistory">
                     History
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/loguser">
+                    Log History
                   </Nav.Link>
                   <Nav.Link as={Link} to="/logout">
                     Logout
@@ -52,6 +56,7 @@ function App() {
           <PrivateRoute component={Logout} exact path="/logout" />
           <PrivateRoute component={Dashboard} exact path="/dashboard" />
           <PrivateRoute component={Dashboard} exact path="/" />
+          <PrivateRoute component={LogUser} exact path="/loguser" />
           <PrivateRoute
             component={CitySearchHistory}
             exact

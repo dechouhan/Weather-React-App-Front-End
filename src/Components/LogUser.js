@@ -2,29 +2,29 @@ import React, { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCityAction } from "../Redux/Actions/weatherAction";
-import { showCitySearchHistory } from "../Thunk/weatherThunk";
+import { showLogUser } from "../Thunk/userThunk";
 
-export default function CitySearchHistory() {
+export default function LogUser() {
   const dispatch = useDispatch();
+  const logs = useSelector((state) => state.Users.loglist);
   const token = useSelector((state) => state.Users.token);
-  const histories = useSelector((state) => state.Weather.showCityHistory);
   useEffect(() => {
     dispatch(resetCityAction());
-    dispatch(showCitySearchHistory(token));
+    dispatch(showLogUser(token));
   }, [dispatch, token]);
 
-  const history = histories.map((record) => {
+  const log = logs.map((record) => {
     return (
       <tr key={record._id}>
         <td>{record.date}</td>
         <td>{record.time}</td>
-        <td>{record.city}</td>
+        <td>{record.email}</td>
       </tr>
     );
   });
   return (
     <div>
-      <h1>History Page</h1>
+      <h1>Log History Page</h1>
       <br />
       <Container>
         <Table striped bordered hover>
@@ -32,10 +32,10 @@ export default function CitySearchHistory() {
             <tr>
               <th>Date</th>
               <th>Time</th>
-              <th>City</th>
+              <th>Email</th>
             </tr>
           </thead>
-          <tbody>{history}</tbody>
+          <tbody>{log}</tbody>
         </Table>
       </Container>
     </div>

@@ -3,6 +3,7 @@ import {
   FETCH_LOCATION_CORDINATES,
   RESET_CITY,
   RESET_LOCATION_CORDINATES,
+  SET_CHECK_ACTION,
   SHOW_CITY_HISTORY,
 } from "../Actions";
 
@@ -10,6 +11,7 @@ const initialState = {
   cityWeather: [{ name: null }],
   locationCordinates: null,
   showCityHistory: [],
+  checkStatus: false,
 };
 
 const Weather = (state = initialState, action) => {
@@ -38,6 +40,11 @@ const Weather = (state = initialState, action) => {
       return {
         ...state,
         cityWeather: [{ name: null }],
+      };
+    case SET_CHECK_ACTION:
+      return {
+        ...state,
+        checkStatus: action.payload,
       };
     default:
       return state;

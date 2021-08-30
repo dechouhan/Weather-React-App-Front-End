@@ -1,4 +1,4 @@
-import { RESET_LOGIN_USER, SET_LOGIN_USER, SIGNUP_USER } from ".";
+import { RESET_LOGIN_USER, SET_LOGIN_USER, SHOW_LOG, SIGNUP_USER } from ".";
 
 export const signupUserAction = (data) => ({
   type: SIGNUP_USER,
@@ -17,3 +17,8 @@ export const setLoginUser = (payload) => {
   localStorage.setItem("city", payload.city);
   return { type: SET_LOGIN_USER, payload };
 };
+
+export const showLogUserAction = (data) => ({
+  type: SHOW_LOG,
+  payload: data,
+});

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { locationCordinatesAction } from "../Redux/Actions/weatherAction";
 import {
@@ -9,7 +10,7 @@ import {
 export default function Dashboard() {
   const dispatch = useDispatch();
   const searchCityWeather = useSelector((state) => state.Weather.cityWeather);
-  const loggedUserEmail = useSelector((state) => state.Users.email);
+  const token = useSelector((state) => state.Users.token);
   const isCordinates = useSelector((state) => state.Weather.locationCordinates);
   const loggedUserCity = useSelector((state) => state.Users.city);
   useEffect(() => {
@@ -23,16 +24,16 @@ export default function Dashboard() {
     }
 
     if (isCordinates) {
-      dispatch(showWeatherByCordinate(isCordinates, loggedUserEmail));
+      dispatch(showWeatherByCordinate(isCordinates, token));
     } else {
-      dispatch(showWeatherByCity(loggedUserCity));
+      dispatch(showWeatherByCity(loggedUserCity,token));
     }
-  }, [dispatch, loggedUserEmail, isCordinates, loggedUserCity]);
+  }, [dispatch, token, isCordinates, loggedUserCity]);
 
   const showWeather = (e) => {
     e.preventDefault();
     const cityname = e.target.city.value;
-    dispatch(showWeatherByCity(cityname, loggedUserEmail));
+    dispatch(showWeatherByCity(cityname, token));
   };
 
   return (
@@ -49,7 +50,7 @@ export default function Dashboard() {
       <br />
       <center>
         {searchCityWeather.name == null ? (
-          ""
+          <Spinner animation="border" variant="primary" />
         ) : (
           <table>
             <tr>

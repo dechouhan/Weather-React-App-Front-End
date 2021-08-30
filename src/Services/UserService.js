@@ -4,6 +4,9 @@ class UserService {
   getAll() {
     return http.get("/users");
   }
+  getshowLogUser(token) {
+    return http.get(`/userlog?token=${token}`);
+  }
 
   signup(data) {
     return http.post("/signup", data);
